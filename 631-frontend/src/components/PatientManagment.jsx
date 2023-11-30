@@ -16,8 +16,7 @@ const PatientManagement = () => {
                 <label>View Patient Information<input type="radio" name="desiredTask" value="viewPatientInfo" onClick={changeTask}/></label>
                 <label>Schedule Appointment with a Doctor<input type="radio" name="desiredTask" value="scheduleAppointment" onClick={changeTask}/></label>
                 <label>Check Previous Diagnoses and Illnesses<input type="radio" name="desiredTask" value="checkPreviousIllnesses" onClick={changeTask}/></label>
-                <label>View Schedule Per Doctor<input type="radio" name="desiredTask" value="viewScheduleDoctor" onClick={changeTask}/></label>
-                <label>View Schedule Per Day<input type="radio" name="desiredTask" value="viewScheduleDay" onClick={changeTask}/></label>
+                <label>View Schedule Per Doctor<input type="radio" name="desiredTask" value="viewSchedulePerDoctorPerDay" onClick={changeTask}/></label>
             </div>
 
             {desiredTask == "insertPatient" ? 
@@ -47,11 +46,11 @@ const PatientManagement = () => {
                 <form>
                     <input type="number" placeholder="Patient Number"/>
                 </form>: null}
-            {desiredTask == "viewScheduleDoctor" ?
-                <input type="number" placeholder="Employee Number of Doctor"/>
-            : null}
-            {desiredTask == "viewScheduleDay" ?
-                <input type="date"/>
+            {desiredTask == "viewSchedulePerDoctorPerDay" ?
+                <div>
+                    <input type="number" placeholder="Employee Number of Doctor"/>
+                    <input type="date"/>
+                </div>
             : null}
         </div>
         
