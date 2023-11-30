@@ -17,9 +17,9 @@ function App() {
       <h1>Newark Medical Associates</h1>
       
       <div>
-        <label>Patient Management<input type='radio' name="desiredTask" value="patientManagement" onClick={switchTab}></input></label>
-        <label>In-Patient Management<input type='radio' name="desiredTask" value="inPatientManagement" onClick={switchTab}></input></label>
-        <label>Clinic Staff Management<input type='radio' name="desiredTask" value="clinicStaffManagement" onClick={switchTab}></input></label>
+        <label>Patient Management<input type='radio' name="desiredTask" value="patientManagement" onClick={switchTab}/></label>
+        <label>In-Patient Management<input type='radio' name="desiredTask" value="inPatientManagement" onClick={switchTab}/></label>
+        <label>Clinic Staff Management<input type='radio' name="desiredTask" value="clinicStaffManagement" onClick={switchTab}/></label>
       </div>
 
       {tab == "patientManagement" ? <PatientManagement/>: null}
