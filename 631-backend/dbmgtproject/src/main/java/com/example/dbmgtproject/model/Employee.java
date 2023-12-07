@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.annotations.Check;
 
+import java.util.List;
+
 @Entity
 @Table(name="EMPLOYEE")
 public class Employee {
@@ -56,4 +58,7 @@ public class Employee {
 
     @Column(name="Contract_Type")
     private String contract_type;
+
+    @OneToMany(mappedBy="employee", cascade = CascadeType.ALL)
+    private List<Surgery> surgeries;
 }

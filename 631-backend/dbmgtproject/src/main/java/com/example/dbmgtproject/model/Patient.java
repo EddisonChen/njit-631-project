@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.annotations.Check;
 
+import java.util.List;
+
 @Entity
 @Table(name="PATIENT")
 public class Patient {
@@ -26,4 +28,7 @@ public class Patient {
 
     @Column(name = "Gender", columnDefinition = "CHAR CHECK (Gender IN ('M', 'F'))")
     private Character gender;
+
+    @OneToMany(mappedBy="patient", cascade = CascadeType.ALL)
+    private List<Surgery> surgeries;
 }
