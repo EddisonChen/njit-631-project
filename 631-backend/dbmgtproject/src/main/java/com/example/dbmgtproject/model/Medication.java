@@ -1,79 +1,90 @@
 package com.example.dbmgtproject.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
-import org.hibernate.annotations.Check;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name="MEDICATION")
 public class Medication implements Serializable {
-    public Integer getMedication_code() {
-        return medication_code;
-    }
 
-    public void setMedication_code(Integer medication_code) {
-        this.medication_code = medication_code;
-    }
+    @OneToMany(mappedBy = "medication1")
+    @JsonProperty("reactsWithKey")
+    private List<ReactsWith> reactsWithList;
 
-    public Integer getYtd_usage() {
-        return ytd_usage;
-    }
-
-    public void setYtd_usage(Integer ytd_usage) {
-        this.ytd_usage = ytd_usage;
-    }
-
-    public String getMedication_name() {
-        return medication_name;
-    }
-
-    public void setMedication_name(String medication_name) {
-        this.medication_name = medication_name;
-    }
-
-    public Integer getQuantity_on_hand() {
-        return quantity_on_hand;
-    }
-
-    public void setQuantity_on_hand(Integer quantity_on_hand) {
-        this.quantity_on_hand = quantity_on_hand;
-    }
-
-    public Integer getQuantity_on_order() {
-        return quantity_on_order;
-    }
-
-    public void setQuantity_on_order(Integer quantity_on_order) {
-        this.quantity_on_order = quantity_on_order;
-    }
-
-    public Float getUnit_cost() {
-        return unit_cost;
-    }
-
-    public void setUnit_cost(Float unit_cost) {
-        this.unit_cost = unit_cost;
-    }
-
+    @OneToMany(mappedBy = "medication", cascade = CascadeType.ALL)
+    @JsonProperty("makesKey")
+    private List<Makes> makesList;
+    @OneToMany(mappedBy = "medication", cascade = CascadeType.ALL)
+    @JsonProperty("prescriptionKey")
+    private List<Prescription> prescriptions;
     @Id
     @Column(name="Medication_Code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer medication_code;
+    private Integer medicationCode;
 
     @Column(name="YTD_Usage")
-    private Integer ytd_usage;
+    private Integer ytdUsage;
 
     @Column(name="Medication_Name")
-    private String medication_name;
+    private String medicationName;
 
     @Column(name="Quantity_On_Hand")
-    private Integer quantity_on_hand;
+    private Integer quantityOnHand;
 
     @Column(name="Quantity_On_Order")
-    private Integer quantity_on_order;
+    private Integer quantityOnOrder;
 
     @Column(name="Unit_Cost")
-    private Float unit_cost;
+    private Float unitCost;
+
+    public Integer getMedicationCode() {
+        return medicationCode;
+    }
+
+    public void setMedicationCode(Integer medicationCode) {
+        this.medicationCode = medicationCode;
+    }
+
+    public Integer getYtdUsage() {
+        return ytdUsage;
+    }
+
+    public void setYtdUsage(Integer ytdUsage) {
+        this.ytdUsage = ytdUsage;
+    }
+
+    public String getMedicationName() {
+        return medicationName;
+    }
+
+    public void setMedicationName(String medicationName) {
+        this.medicationName = medicationName;
+    }
+
+    public Integer getQuantityOnHand() {
+        return quantityOnHand;
+    }
+
+    public void setQuantityOnHand(Integer quantityOnHand) {
+        this.quantityOnHand = quantityOnHand;
+    }
+
+    public Integer getQuantityOnOrder() {
+        return quantityOnOrder;
+    }
+
+    public void setQuantityOnOrder(Integer quantityOnOrder) {
+        this.quantityOnOrder = quantityOnOrder;
+    }
+
+    public Float getUnitCost() {
+        return unitCost;
+    }
+
+    public void setUnitCost(Float unitCost) {
+        this.unitCost = unitCost;
+    }
 }

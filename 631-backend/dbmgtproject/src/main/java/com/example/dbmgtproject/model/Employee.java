@@ -1,7 +1,7 @@
 package com.example.dbmgtproject.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
 import org.hibernate.annotations.Check;
 
 import java.io.Serializable;
@@ -10,12 +10,88 @@ import java.util.List;
 @Entity
 @Table(name="EMPLOYEE")
 public class Employee implements Serializable {
-    public Integer getEmp_id() {
-        return emp_id;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @JsonProperty("hasSkillsKey")
+    private List<HasSkills> hasSkillsList;
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @JsonProperty("physicianCaresForKey")
+    private List<PhysicianCaresFor> physicianCaresForList;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="Specialty_Type_Code")
+    private Specialty specialty;
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @JsonProperty("diagnosisKey")
+    private List<Diagnosis> diagnoses;
+    @OneToMany(mappedBy="employee", cascade = CascadeType.ALL)
+    @JsonProperty("prescriptionKey")
+    private List<Prescription> prescriptions;
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @JsonProperty("consultationKey")
+    private List<Consultation> consultations;
+    @ManyToMany(mappedBy="employee", cascade = CascadeType.ALL)
+    @JsonProperty("surgeryKey")
+    private List<Surgery> surgeries;
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @JsonProperty("nurseCaresForKey")
+    private List<NurseCaresFor> nurseCaresForList;
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @JsonProperty("primaryPhysicianKey")
+    private List<PrimaryPhysician> primaryPhysicians;
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @JsonProperty("nurseSurgeryTypeKey")
+    private List<NurseSurgeryType> nurseSurgeryTypes;
+    @Id
+    @Column(name="Emp_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer empId;
+
+    @Column(name="Name")
+    private String name;
+
+    @Column(name="Salary")
+    @Check(constraints= "Salary IS NULL OR (Salary BETWEEN 25000 AND 300000)")
+    private Integer salary;
+
+    @Column(name="Gender", columnDefinition = "CHAR CHECK (Gender IN('M', 'F'))")
+    private Character gender;
+
+    @Column(name="Address")
+    private String address;
+
+    @Column(name="SSN")
+    private String ssn;
+
+    @Column(name="Phone")
+    private String phone;
+
+    @Column(name="Emp_Type")
+    private String empType;
+
+    @Column(name="Support_Staff_Type")
+    private String supportStaffType;
+
+    @Column(name="Grade")
+    private String grade;
+
+    @Column(name="Years_Experience")
+    private Integer yearsExperience;
+
+    @Column(name="Doc_Type")
+    private String docType;
+
+    @Column(name="Amount")
+    private Integer amount;
+
+    @Column(name="Contract_Type")
+    private String contractType;
+
+    public Integer getEmpId() {
+        return empId;
     }
 
-    public void setEmp_id(Integer emp_id) {
-        this.emp_id = emp_id;
+    public void setEmpId(Integer empId) {
+        this.empId = empId;
     }
 
     public String getName() {
@@ -66,20 +142,20 @@ public class Employee implements Serializable {
         this.phone = phone;
     }
 
-    public String getEmp_type() {
-        return emp_type;
+    public String getEmpType() {
+        return empType;
     }
 
-    public void setEmp_type(String emp_type) {
-        this.emp_type = emp_type;
+    public void setEmpType(String empType) {
+        this.empType = empType;
     }
 
-    public String getSupport_staff_type() {
-        return support_staff_type;
+    public String getSupportStaffType() {
+        return supportStaffType;
     }
 
-    public void setSupport_staff_type(String support_staff_type) {
-        this.support_staff_type = support_staff_type;
+    public void setSupportStaffType(String supportStaffType) {
+        this.supportStaffType = supportStaffType;
     }
 
     public String getGrade() {
@@ -90,36 +166,28 @@ public class Employee implements Serializable {
         this.grade = grade;
     }
 
-    public Integer getYears_experience() {
-        return years_experience;
+    public Integer getYearsExperience() {
+        return yearsExperience;
     }
 
-    public void setYears_experience(Integer years_experience) {
-        this.years_experience = years_experience;
+    public void setYearsExperience(Integer yearsExperience) {
+        this.yearsExperience = yearsExperience;
     }
 
-    public String getSpecialty() {
+    public Specialty getSpecialty() {
         return specialty;
     }
 
-    public void setSpecialty(String specialty) {
+    public void setSpecialty(Specialty specialty) {
         this.specialty = specialty;
     }
 
-    public String getDoc_type() {
-        return doc_type;
+    public String getDocType() {
+        return docType;
     }
 
-    public void setDoc_type(String doc_type) {
-        this.doc_type = doc_type;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
+    public void setDocType(String docType) {
+        this.docType = docType;
     }
 
     public Integer getAmount() {
@@ -130,72 +198,11 @@ public class Employee implements Serializable {
         this.amount = amount;
     }
 
-    public String getContract_type() {
-        return contract_type;
+    public String getContractType() {
+        return contractType;
     }
 
-    public void setContract_type(String contract_type) {
-        this.contract_type = contract_type;
+    public void setContractType(String contractType) {
+        this.contractType = contractType;
     }
-
-    public List<Surgery> getSurgeries() {
-        return surgeries;
-    }
-
-    public void setSurgeries(List<Surgery> surgeries) {
-        this.surgeries = surgeries;
-    }
-
-    @Id
-    @Column(name="Emp_ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer emp_id;
-
-    @Column(name="Name")
-    private String name;
-
-    @Column(name="Salary", columnDefinition = "INT CHECK (Salary IS NULL OR (Salary >= 25000 AND Salary <= 300000))")
-    private Integer salary;
-
-    @Column(name = "Gender", columnDefinition = "CHAR CHECK (Gender IN ('M', 'F'))")
-    private Character gender;
-
-    @Column(name="Address")
-    private String address;
-
-    @Column(name="SSN")
-    private String ssn;
-
-    @Column(name="Phone")
-    private String phone;
-
-    @Column(name="Emp_Type")
-    private String emp_type;
-
-    @Column(name="Support_Staff_Type")
-    private String support_staff_type;
-
-    @Column(name="Grade")
-    private String grade;
-
-    @Column(name="Years_Experience")
-    private Integer years_experience;
-
-    @Column(name="Specialty")
-    private String specialty;
-
-    @Column(name="Doc_Type")
-    private String doc_type;
-
-    @Column(name="Duration")
-    private Integer duration;
-
-    @Column(name="Amount")
-    private Integer amount;
-
-    @Column(name="Contract_Type")
-    private String contract_type;
-
-    @OneToMany(mappedBy="employee", cascade = CascadeType.ALL)
-    private List<Surgery> surgeries;
 }

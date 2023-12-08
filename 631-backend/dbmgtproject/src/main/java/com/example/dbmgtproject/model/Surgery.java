@@ -1,47 +1,47 @@
 package com.example.dbmgtproject.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
-import org.hibernate.annotations.Check;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
-@Table(name="SURGERY")
-@IdClass(SurgeryPK.class)
+@Table(name="Surgery")
 public class Surgery implements Serializable {
-    public Employee getEmployee() {
-        return employee;
+    @Id
+    @Column(name="Surgery_Key")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer surgeryKey;
+
+    @Column(name="Theater")
+    private String theater;
+
+    @Column(name="Date")
+    private Date date;
+
+    @ManyToMany
+    @JoinColumn(name="Emp_ID")
+    @JsonProperty("empId")
+    private List<Employee> employees;
+
+    @ManyToOne
+    @JoinColumn(name="Surgery_Type_Code")
+    @JsonProperty("surgeryType")
+    private SurgeryType surgeryType;
+
+    @ManyToOne
+    @JoinColumn(name="Patient_Number")
+    @JsonProperty("patientNumber")
+    private Patient patient;
+
+    public Integer getSurgeryKey() {
+        return surgeryKey;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
-
-    public Surgery_Type getSurgery_type() {
-        return surgery_type;
-    }
-
-    public void setSurgery_type(Surgery_Type surgery_type) {
-        this.surgery_type = surgery_type;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public void setSurgeryKey(Integer surgeryKey) {
+        this.surgeryKey = surgeryKey;
     }
 
     public String getTheater() {
@@ -52,28 +52,35 @@ public class Surgery implements Serializable {
         this.theater = theater;
     }
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name="Emp_ID")
-    @JsonIgnoreProperties({"name", "salary", "gender", "address", "ssn", "phone", "emp_type", "support_staff_type", "grade", "years_experience", "specialty", "doc_type", "duration", "amount", "contract_type", "surgeries"})
-    private Employee employee;
+    public Date getDate() {
+        return date;
+    }
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name="Patient_Number")
-    @JsonIgnoreProperties({"ssn", "blood_type", "address", "name", "gender", "surgeries"})
-    private Patient patient;
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name="Surgery_Type_Code")
-    @JsonIgnoreProperties({"surgery_name", "anatomical_location", "surgery_category", "surgeries"})
-    private Surgery_Type surgery_type;
+    public List<Employee> getEmployees() {
+        return employees;
+    }
 
-    @Id
-    @Column(name="Date")
-    private Date date;
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
 
-    @Column(name="Theater")
-    private String theater;
+    public SurgeryType getSurgeryType() {
+        return surgeryType;
+    }
+
+    public void setSurgeryType(SurgeryType surgeryType) {
+        this.surgeryType = surgeryType;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 }

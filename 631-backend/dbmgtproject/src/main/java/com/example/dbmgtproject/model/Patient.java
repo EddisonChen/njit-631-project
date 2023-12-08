@@ -1,35 +1,85 @@
 package com.example.dbmgtproject.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
-import org.hibernate.annotations.Check;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
 @Table(name="PATIENT")
 public class Patient implements Serializable {
-    @Id
-    @Column(name = "Patient_Number")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer patient_number;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @JsonProperty("hasAllergyKey")
+    private List<HasAllergy> hasAllergies;
 
-    @Column(name = "SSN")
+    @OneToMany(mappedBy="patient", cascade = CascadeType.ALL)
+    @JsonProperty("physicianCaresFoKey")
+    private List<PhysicianCaresFor> physicianCaresForList;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @JsonProperty("admittedToKey")
+    private List<AdmittedTo> admittedToList;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @JsonProperty("diagnosisKey")
+    private List<Diagnosis> diagnoses;
+    @OneToMany(mappedBy="patient", cascade = CascadeType.ALL)
+    @JsonProperty("prescriptionKey")
+    private List<Prescription> prescriptions;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @JsonProperty("consultationKey")
+    private List<Consultation> consultations;
+    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
+    private MedicalData medicalData;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @JsonProperty("surgeryKey")
+    private List<Surgery> surgeries;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @JsonProperty("nurseCaresForKey")
+    private List<NurseCaresFor> nurseCaresForList;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @JsonProperty("primaryPhysicianKey")
+    private List<PrimaryPhysician> primaryPhysicians;
+
+    @Column(name="Gender", columnDefinition = "CHAR CHECK (Gender IN('M', 'F'))")
+    private Character gender;
+    @Id
+    @Column(name="Patient_Number")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer patientNumber;
+
+    @Column(name="DOB")
+    private Date date;
+
+    @Column(name="SSN")
     private String ssn;
 
-    @Column(name = "Blood_Type")
-    private String blood_type;
+    @Column(name="Blood_Type")
+    private String bloodType;
 
-    @Column(name = "Address")
+    @Column(name="Address")
     private String address;
 
-    public Integer getPatient_number() {
-        return patient_number;
+    @Column(name="Name")
+    private String name;
+
+    public Integer getPatientNumber() {
+        return patientNumber;
     }
 
-    public void setPatient_number(Integer patient_number) {
-        this.patient_number = patient_number;
+    public void setPatientNumber(Integer patientNumber) {
+        this.patientNumber = patientNumber;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getSsn() {
@@ -40,12 +90,12 @@ public class Patient implements Serializable {
         this.ssn = ssn;
     }
 
-    public String getBlood_type() {
-        return blood_type;
+    public String getBloodType() {
+        return bloodType;
     }
 
-    public void setBlood_type(String blood_type) {
-        this.blood_type = blood_type;
+    public void setBloodType(String bloodType) {
+        this.bloodType = bloodType;
     }
 
     public String getAddress() {
@@ -71,21 +121,4 @@ public class Patient implements Serializable {
     public void setGender(Character gender) {
         this.gender = gender;
     }
-
-    public List<Surgery> getSurgeries() {
-        return surgeries;
-    }
-
-    public void setSurgeries(List<Surgery> surgeries) {
-        this.surgeries = surgeries;
-    }
-
-    @Column(name = "Name")
-    private String name;
-
-    @Column(name = "Gender", columnDefinition = "CHAR CHECK (Gender IN ('M', 'F'))")
-    private Character gender;
-
-    @OneToMany(mappedBy="patient", cascade = CascadeType.ALL)
-    private List<Surgery> surgeries;
 }

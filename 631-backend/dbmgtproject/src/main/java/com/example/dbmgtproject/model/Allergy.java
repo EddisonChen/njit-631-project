@@ -1,33 +1,39 @@
 package com.example.dbmgtproject.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name="ALLERGY")
 public class Allergy implements Serializable {
-    public Integer getAllergy_code() {
-        return allergy_code;
-    }
 
-    public void setAllergy_code(Integer allergy_code) {
-        this.allergy_code = allergy_code;
-    }
-
-    public String getAllergy_description() {
-        return allergy_description;
-    }
-
-    public void setAllergy_description(String allergy_description) {
-        this.allergy_description = allergy_description;
-    }
-
+    @OneToMany(mappedBy = "allergy", cascade = CascadeType.ALL)
+    @JsonProperty("hasAllergyKey")
+    private List<HasAllergy> hasAllergies;
     @Id
     @Column(name="Allergy_Code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer allergy_code;
+    private Integer allergyCode;
 
     @Column(name="Allergy_Description")
-    private String allergy_description;
+    private String allergyDescription;
+
+    public Integer getAllergyCode() {
+        return allergyCode;
+    }
+
+    public void setAllergyCode(Integer allergyCode) {
+        this.allergyCode = allergyCode;
+    }
+
+    public String getAllergyDescription() {
+        return allergyDescription;
+    }
+
+    public void setAllergyDescription(String allergyDescription) {
+        this.allergyDescription = allergyDescription;
+    }
 }
