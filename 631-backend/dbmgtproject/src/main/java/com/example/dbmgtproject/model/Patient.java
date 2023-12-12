@@ -52,7 +52,7 @@ public class Patient implements Serializable {
     private Integer patientNumber;
 
     @Column(name="DOB")
-    private Date date;
+    private Date dob;
 
     @Column(name="SSN")
     private String ssn;
@@ -75,11 +75,11 @@ public class Patient implements Serializable {
     }
 
     public Date getDate() {
-        return date;
+        return dob;
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.dob = dob;
     }
 
     public String getSsn() {
