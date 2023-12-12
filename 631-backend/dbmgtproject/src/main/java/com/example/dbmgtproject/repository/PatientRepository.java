@@ -7,7 +7,5 @@ import java.sql.Date;
 import java.util.List;
 
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
-    List<Patient> findByNameAndDob(String name, Date dob);
-
     Patient findByPatientNumber(Integer patientNumber);
 }
