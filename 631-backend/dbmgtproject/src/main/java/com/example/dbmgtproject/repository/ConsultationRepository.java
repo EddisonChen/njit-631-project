@@ -15,4 +15,7 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Inte
             "AND c.consultationDate = :date")
     List<Consultation> findTimeSlotsForDoctor(@Param("doctor") Employee doctor,
                                               @Param("date") Date date);
+
+    List<Consultation> findConsultationsByEmployeeAndConsultationDate(Employee doctor, Date date);
 }
+

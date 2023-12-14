@@ -70,22 +70,23 @@ public class InPatientManagementService {
         return surgeryRepository.findSurgeryByTheaterAndDate(theater, date);
     }
 
-    public List<Surgery> viewScheduledSurgeryPerSurgeonPerDay(Employee surgeon, Date date) {
-        return surgeryRepository.findSurgeriesBySurgeonAndDate(surgeon, date);
+    public List<Surgery> viewScheduledSurgeryPerSurgeonPerDay(Integer surgeonId, Date date) {
+        return surgeryRepository.findSurgeriesByEmployeesEmpIdAndDate(surgeonId, date);
     }
 
-    public void bookSurgery(Patient patient, String theater, Date date, List<Employee> staff, SurgeryType surgeryType) {
+    public void bookSurgery(Patient patient, String theater, Date date, List<Employee> staff, Integer surgeryTypeCode) {
         Surgery surgery = new Surgery();
+        SurgeryType surgeryType = new SurgeryType();
         surgery.setPatient(patient);
         surgery.setTheater(theater);
         surgery.setDate(date);
         surgery.setEmployees(staff);
-        surgery.setSurgeryType(surgeryType);
+        surgeryType.setSurgeryTypeCode(surgeryTypeCode);
 
         surgeryRepository.save(surgery);
     }
 
-    public List<Surgery> viewScheduledSurgeriesPerPatient(Patient patient) {
-        return surgeryRepository.findSurgeriesByPatient(patient);
+    public List<Surgery> viewScheduledSurgeriesPerPatient(Integer patientNumber) {
+        return surgeryRepository.findSurgeriesByPatientPatientNumber(patientNumber);
     }
 }

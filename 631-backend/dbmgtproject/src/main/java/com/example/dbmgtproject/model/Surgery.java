@@ -22,13 +22,17 @@ public class Surgery implements Serializable {
     private Date date;
 
     @ManyToMany
-    @JoinColumn(name="Emp_ID")
+    @JoinTable(
+            name = "surgery_employees",
+            joinColumns = @JoinColumn(name = "Surgery_Key"),
+            inverseJoinColumns = @JoinColumn(name = "Emp_ID")
+    )
     @JsonProperty("empId")
     private List<Employee> employees;
 
     @ManyToOne
     @JoinColumn(name="Surgery_Type_Code")
-    @JsonProperty("surgeryType")
+    @JsonProperty("surgeryKey")
     private SurgeryType surgeryType;
 
     @ManyToOne
@@ -68,13 +72,13 @@ public class Surgery implements Serializable {
         this.employees = employees;
     }
 
-    public SurgeryType getSurgeryType() {
-        return surgeryType;
-    }
-
-    public void setSurgeryType(SurgeryType surgeryType) {
-        this.surgeryType = surgeryType;
-    }
+//    public SurgeryType getSurgeryType() {
+//        return surgeryType;
+//    }
+//
+//    public void setSurgeryType(SurgeryType surgeryType) {
+//        this.surgeryType = surgeryType;
+//    }
 
     public Patient getPatient() {
         return patient;

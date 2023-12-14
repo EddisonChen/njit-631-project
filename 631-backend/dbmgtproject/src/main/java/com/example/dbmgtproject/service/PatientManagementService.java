@@ -44,11 +44,11 @@ public class PatientManagementService {
     }
 
     public List<Diagnosis> checkPreviousDiagnoses(Integer patientNumber) {
-        return diagnosisRepository.findByPatientNumber(patientNumber);
+        return diagnosisRepository.findByPatientPatientNumber(patientNumber);
     }
 
     public List<Consultation> viewScheduledConsultationsPerDoctorPerDate(Employee doctor, Date date) {
-        List<Consultation> consultations = employeeRepository.findConsultationsByEmployeeAndConsultationDate(doctor, date);
+        List<Consultation> consultations = consultationRepository.findConsultationsByEmployeeAndConsultationDate(doctor, date);
         return consultations;
     }
 }

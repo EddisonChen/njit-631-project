@@ -15,12 +15,10 @@ public class Specialty implements Serializable {
     private Integer specialtyKey;
 
     @OneToMany(mappedBy="specialty")
-    @JoinColumn(name="Emp_ID")
     @JsonProperty("empId")
     private List<Employee> employees;
 
     @OneToMany(mappedBy="specialty")
-    @JoinColumn(name="Surgery_Type_Code")
     @JsonProperty("surgeryTypeCode")
     private List<SurgeryType> surgeryTypes;
 

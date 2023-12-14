@@ -100,7 +100,6 @@ public class InPatientManagementController {
             @RequestParam("shift") Integer shift,
             @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
 
-        // Assuming you have repositories for Employee and Patient
         Optional<Employee> nurseOptional = employeeRepository.findById(nurseId);
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
 
@@ -121,15 +120,12 @@ public class InPatientManagementController {
             @RequestParam("patientId") Integer patientId,
             @RequestParam("shift") Integer shift,
             @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
-
-        // Assuming you have repositories for Employee and Patient
         Optional<Employee> nurseOptional = employeeRepository.findById(nurseId);
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
 
         if (nurseOptional.isEmpty() || patientOptional.isEmpty()) {
             return ResponseEntity.badRequest().body("Invalid nurse or patient ID");
         }
-
         Employee nurse = nurseOptional.get();
         Patient patient = patientOptional.get();
 
@@ -141,7 +137,6 @@ public class InPatientManagementController {
     public ResponseEntity<List<Surgery>> viewScheduledSurgeryPerRoomPerDay(
             @RequestParam("theater") String theater,
             @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
-
         List<Surgery> surgeries = inPatientManagementService.viewScheduledSurgeryPerRoomPerDay(theater, date);
         return new ResponseEntity<>(surgeries, HttpStatus.OK);
     }
@@ -150,16 +145,9 @@ public class InPatientManagementController {
     public ResponseEntity<List<Surgery>> viewScheduledSurgeryPerSurgeonPerDay(
             @RequestParam("surgeonId") Integer surgeonId,
             @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
-
-        // Assuming you have a repository for Employee
         Optional<Employee> surgeonOptional = employeeRepository.findById(surgeonId);
-
-        if (surgeonOptional.isEmpty()) {
-            return ResponseEntity.badRequest().body("Invalid surgeon ID");
-        }
-
-        Employee surgeon = surgeonOptional.get();
-        List<Surgery> surgeries = inPatientManagementService.viewScheduledSurgeryPerSurgeonPerDay(surgeon, date);
+//        Employee surgeon = surgeonOptional.get();
+        List<Surgery> surgeries = inPatientManagementService.viewScheduledSurgeryPerSurgeonPerDay(surgeonId, date);
         return new ResponseEntity<>(surgeries, HttpStatus.OK);
     }
 
@@ -169,16 +157,13 @@ public class InPatientManagementController {
             @RequestParam("theater") String theater,
             @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
             @RequestParam("staffIds") List<Integer> staffIds,
-            @RequestParam("surgeryType") SurgeryType surgeryType) {
+            @RequestParam("surgeryType") Integer surgeryType) {
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
         List<Employee> staff = employeeRepository.findAllById(staffIds);
-
         if (patientOptional.isEmpty() || staff.isEmpty()) {
             return ResponseEntity.badRequest().body("Invalid patient or staff IDs");
         }
-
         Patient patient = patientOptional.get();
-
         inPatientManagementService.bookSurgery(patient, theater, date, staff, surgeryType);
         return ResponseEntity.ok("Surgery booked successfully");
     }
@@ -188,7 +173,7 @@ public class InPatientManagementController {
             @RequestParam("patientId") Integer patientId) {
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
         Patient patient = patientOptional.get();
-        List<Surgery> surgeries = inPatientManagementService.viewScheduledSurgeriesPerPatient(patient);
+        List<Surgery> surgeries = inPatientManagementService.viewScheduledSurgeriesPerPatient(patientId);
         return new ResponseEntity<>(surgeries, HttpStatus.OK);
     }
 }

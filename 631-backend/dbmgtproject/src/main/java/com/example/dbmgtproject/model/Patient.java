@@ -15,7 +15,7 @@ public class Patient implements Serializable {
     private List<HasAllergy> hasAllergies;
 
     @OneToMany(mappedBy="patient", cascade = CascadeType.ALL)
-    @JsonProperty("physicianCaresFoKey")
+    @JsonProperty("physicianCaresForKey")
     private List<PhysicianCaresFor> physicianCaresForList;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)

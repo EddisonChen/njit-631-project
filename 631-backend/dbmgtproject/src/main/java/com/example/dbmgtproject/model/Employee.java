@@ -10,7 +10,6 @@ import java.util.List;
 @Entity
 @Table(name="EMPLOYEE")
 public class Employee implements Serializable {
-
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     @JsonProperty("hasSkillsKey")
     private List<HasSkills> hasSkillsList;
@@ -18,7 +17,8 @@ public class Employee implements Serializable {
     @JsonProperty("physicianCaresForKey")
     private List<PhysicianCaresFor> physicianCaresForList;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="Specialty_Type_Code")
+    @JoinColumn(name="Specialty")
+    @JsonProperty("specialtyKey")
     private Specialty specialty;
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     @JsonProperty("diagnosisKey")
@@ -29,7 +29,7 @@ public class Employee implements Serializable {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     @JsonProperty("consultationKey")
     private List<Consultation> consultations;
-    @ManyToMany(mappedBy="employee", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy="employees", cascade = CascadeType.ALL)
     @JsonProperty("surgeryKey")
     private List<Surgery> surgeries;
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)

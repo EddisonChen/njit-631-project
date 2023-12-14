@@ -18,12 +18,12 @@ public class ReactsWith implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "Medication_Code1")
-    @JsonProperty("medicationCode")
+    @JsonProperty("medicationCode1")
     private Medication medication1;
 
     @ManyToOne
     @JoinColumn(name = "Medication_Code2")
-    @JsonProperty("medicationCode")
+    @JsonProperty("medicationCode2")
     private Medication medication2;
 
 }

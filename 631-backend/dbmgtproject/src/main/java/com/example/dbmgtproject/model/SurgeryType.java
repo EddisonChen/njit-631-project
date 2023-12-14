@@ -13,7 +13,8 @@ public class SurgeryType implements Serializable {
     @OneToMany(mappedBy = "surgeryType", cascade = CascadeType.ALL)
     @JsonProperty("requiresKey")
     private List<Requires> requiresList;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name="Surgery_Type_Code", insertable = false, updatable = false)
     @JsonProperty("specialtyKey")
     private Specialty specialty;
     @OneToMany(mappedBy = "surgeryType", cascade = CascadeType.ALL)

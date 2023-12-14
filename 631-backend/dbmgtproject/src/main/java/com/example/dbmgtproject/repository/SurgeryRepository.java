@@ -9,9 +9,9 @@ import java.sql.Date;
 import java.util.List;
 
 public interface SurgeryRepository extends JpaRepository<Surgery, Integer> {
-    List<Surgery> findSurgeriesBySurgeonAndDate(Employee surgeon, Date date);
+    List<Surgery> findSurgeriesByEmployeesEmpIdAndDate(Integer surgeonId, Date date);
 
     List<Surgery> findSurgeryByTheaterAndDate(String theater, Date date);
 
-    List<Surgery> findSurgeriesByPatient(Patient patient);
+    List<Surgery> findSurgeriesByPatientPatientNumber(Integer patientNumber);
 }

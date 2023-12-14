@@ -9,10 +9,7 @@ import java.util.List;
 import java.sql.Date;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
-    List<Consultation> findConsultationsByEmployeeAndConsultationDate(Employee doctor, Date date);
-
-    List<Surgery> findSurgeriesByEmployeeAndDate(Employee doctor, Date date);
-
+//    List<Consultation> findConsultationsByEmpIdAndConsultationDate(Employee doctor, Date date);
     List<Employee> findByEmpType(String empType);
 
 }
