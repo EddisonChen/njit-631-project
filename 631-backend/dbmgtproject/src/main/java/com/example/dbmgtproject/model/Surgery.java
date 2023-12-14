@@ -23,7 +23,7 @@ public class Surgery implements Serializable {
 
     @ManyToMany
     @JoinTable(
-            name = "surgery_employees",
+            name = "employee_surgery",
             joinColumns = @JoinColumn(name = "Surgery_Key"),
             inverseJoinColumns = @JoinColumn(name = "Emp_ID")
     )
@@ -71,14 +71,6 @@ public class Surgery implements Serializable {
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
-
-//    public SurgeryType getSurgeryType() {
-//        return surgeryType;
-//    }
-//
-//    public void setSurgeryType(SurgeryType surgeryType) {
-//        this.surgeryType = surgeryType;
-//    }
 
     public Patient getPatient() {
         return patient;

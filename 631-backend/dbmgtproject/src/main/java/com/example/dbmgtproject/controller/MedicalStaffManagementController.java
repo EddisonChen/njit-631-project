@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -28,8 +28,8 @@ public class MedicalStaffManagementController {
     }
 
     @DeleteMapping("/remove")
-    public ResponseEntity<String> removeStaffMember(@RequestBody Employee staffMember) {
-        medicalStaffManagementService.removeStaffMember(staffMember);
+    public ResponseEntity<String> removeStaffMember(@RequestParam("empId") Integer empId) {
+        medicalStaffManagementService.removeStaffMember(empId);
         return ResponseEntity.ok("Staff member removed successfully");
     }
 
