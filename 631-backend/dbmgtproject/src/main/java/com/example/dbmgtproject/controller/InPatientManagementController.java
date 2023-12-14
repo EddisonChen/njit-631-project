@@ -8,9 +8,11 @@ import com.example.dbmgtproject.service.InPatientManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -134,10 +136,10 @@ public class InPatientManagementController {
     }
 
     @GetMapping("/view-scheduled-surgery-per-room-per-day")
-    public ResponseEntity<List<Surgery>> viewScheduledSurgeryPerRoomPerDay(
+    public ResponseEntity<List<Object[]>> viewScheduledSurgeryPerRoomPerDay(
             @RequestParam("theater") String theater,
             @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
-        List<Surgery> surgeries = inPatientManagementService.viewScheduledSurgeryPerRoomPerDay(theater, date);
+        List<Object[]> surgeries = inPatientManagementService.viewScheduledSurgeryPerRoomPerDay(theater, date);
         return new ResponseEntity<>(surgeries, HttpStatus.OK);
     }
 
@@ -145,7 +147,7 @@ public class InPatientManagementController {
     public ResponseEntity<List<Surgery>> viewScheduledSurgeryPerSurgeonPerDay(
             @RequestParam("surgeonId") Integer surgeonId,
             @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
-        Optional<Employee> surgeonOptional = employeeRepository.findById(surgeonId);
+//        Optional<Employee> surgeonOptional = employeeRepository.findById(surgeonId);
 //        Employee surgeon = surgeonOptional.get();
         List<Surgery> surgeries = inPatientManagementService.viewScheduledSurgeryPerSurgeonPerDay(surgeonId, date);
         return new ResponseEntity<>(surgeries, HttpStatus.OK);
@@ -156,24 +158,21 @@ public class InPatientManagementController {
             @RequestParam("patientId") Integer patientId,
             @RequestParam("theater") String theater,
             @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
-            @RequestParam("staffIds") List<Integer> staffIds,
-            @RequestParam("surgeryType") Integer surgeryType) {
+            @RequestParam("staffIds") List<Integer> staffIds) {
         Optional<Patient> patientOptional = patientRepository.findById(patientId);
         List<Employee> staff = employeeRepository.findAllById(staffIds);
         if (patientOptional.isEmpty() || staff.isEmpty()) {
             return ResponseEntity.badRequest().body("Invalid patient or staff IDs");
         }
         Patient patient = patientOptional.get();
-        inPatientManagementService.bookSurgery(patient, theater, date, staff, surgeryType);
+        inPatientManagementService.bookSurgery(patient, theater, date, staff);
         return ResponseEntity.ok("Surgery booked successfully");
     }
 
     @GetMapping("/view-scheduled-surgeries-per-patient")
-    public ResponseEntity<List<Surgery>> viewScheduledSurgeriesPerPatient(
-            @RequestParam("patientId") Integer patientId) {
-        Optional<Patient> patientOptional = patientRepository.findById(patientId);
-        Patient patient = patientOptional.get();
-        List<Surgery> surgeries = inPatientManagementService.viewScheduledSurgeriesPerPatient(patientId);
+    public ResponseEntity<List<Object[]>> viewScheduledSurgeriesPerPatient(
+            @RequestParam("patientNumber") Integer patientNumber) {
+        List<Object[]> surgeries = inPatientManagementService.viewScheduledSurgeriesPerPatient(patientNumber);
         return new ResponseEntity<>(surgeries, HttpStatus.OK);
     }
 }

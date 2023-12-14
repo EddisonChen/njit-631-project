@@ -21,7 +21,7 @@ public class Surgery implements Serializable {
     @Column(name="Date")
     private Date date;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "employee_surgery",
             joinColumns = @JoinColumn(name = "Surgery_Key"),
@@ -32,13 +32,20 @@ public class Surgery implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="Surgery_Type_Code")
-    @JsonProperty("surgeryKey")
+    @JsonProperty("surgeryTypeCode")
     private SurgeryType surgeryType;
 
     @ManyToOne
     @JoinColumn(name="Patient_Number")
     @JsonProperty("patientNumber")
     private Patient patient;
+
+    public SurgeryType getSurgeryType() {
+        return surgeryType;
+    }
+    public void setSurgeryType(SurgeryType surgeryType) {
+        this.surgeryType = surgeryType;
+    }
 
     public Integer getSurgeryKey() {
         return surgeryKey;

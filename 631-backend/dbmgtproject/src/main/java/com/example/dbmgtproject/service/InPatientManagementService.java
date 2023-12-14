@@ -4,6 +4,7 @@ import com.example.dbmgtproject.model.*;
 import com.example.dbmgtproject.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,10 @@ public class InPatientManagementService {
     private NurseCaresForRepository nurseCaresForRepository;
     @Autowired
     private SurgeryRepository surgeryRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    private PatientRepository patientRepository;
 
     public List<ClinicBed> findAvailableBeds() {
         return clinicBedRepository.findByAdmittedToListIsNull();
@@ -66,7 +71,7 @@ public class InPatientManagementService {
         nurseCaresForOptional.ifPresent(nurseCaresForRepository::delete);
     }
 
-    public List<Surgery> viewScheduledSurgeryPerRoomPerDay(String theater, Date date) {
+    public List<Object[]> viewScheduledSurgeryPerRoomPerDay(String theater, Date date) {
         return surgeryRepository.findSurgeryByTheaterAndDate(theater, date);
     }
 
@@ -74,19 +79,17 @@ public class InPatientManagementService {
         return surgeryRepository.findSurgeriesByEmployeesEmpIdAndDate(surgeonId, date);
     }
 
-    public void bookSurgery(Patient patient, String theater, Date date, List<Employee> staff, Integer surgeryTypeCode) {
+    @Transactional
+    public void bookSurgery(Patient patient, String theater, Date date, List<Employee> staff) {
         Surgery surgery = new Surgery();
-        SurgeryType surgeryType = new SurgeryType();
         surgery.setPatient(patient);
         surgery.setTheater(theater);
         surgery.setDate(date);
         surgery.setEmployees(staff);
-        surgeryType.setSurgeryTypeCode(surgeryTypeCode);
 
         surgeryRepository.save(surgery);
     }
-
-    public List<Surgery> viewScheduledSurgeriesPerPatient(Integer patientNumber) {
+    public List<Object[]> viewScheduledSurgeriesPerPatient(Integer patientNumber) {
         return surgeryRepository.findSurgeriesByPatientPatientNumber(patientNumber);
     }
 }
