@@ -5,7 +5,7 @@ import com.example.dbmgtproject.model.Patient;
 import com.example.dbmgtproject.model.Surgery;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public interface SurgeryRepository extends JpaRepository<Surgery, Integer> {

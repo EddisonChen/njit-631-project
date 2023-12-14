@@ -1,6 +1,9 @@
 package com.example.dbmgtproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Check;
 
@@ -9,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name="EMPLOYEE")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "empId")
 public class Employee implements Serializable {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     @JsonProperty("hasSkillsKey")
@@ -28,6 +32,7 @@ public class Employee implements Serializable {
     private List<Prescription> prescriptions;
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     @JsonProperty("consultationKey")
+    @JsonIgnore
     private List<Consultation> consultations;
     @ManyToMany(mappedBy="employees", cascade = CascadeType.ALL)
     @JsonProperty("surgeryKey")

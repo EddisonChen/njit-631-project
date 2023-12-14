@@ -1,14 +1,18 @@
 package com.example.dbmgtproject.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name="CONSULTATION")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "consultationKey")
 public class Consultation implements Serializable {
     @OneToMany(mappedBy = "consultation")
     @JsonProperty("diagnosisKey")
@@ -38,6 +42,7 @@ public class Consultation implements Serializable {
     @ManyToOne
     @JoinColumn(name="Emp_ID")
     @JsonProperty("empId")
+    @JsonIgnore
     private Employee employee;
 
     public Integer getConsultationKey() {
