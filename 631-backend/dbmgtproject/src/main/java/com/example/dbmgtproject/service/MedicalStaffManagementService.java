@@ -32,7 +32,7 @@ public class MedicalStaffManagementService {
             throw new EntityNotFoundException("Employee with ID " + empId + " not found");
         }
     }
-    public List<Employee> viewStaffMembersByJobType(String empType) {
+    public List<Object[]> viewStaffMembersByJobType(String empType) {
         return employeeRepository.findByEmpType(empType);
     }
 

@@ -34,8 +34,8 @@ public class MedicalStaffManagementController {
     }
 
     @GetMapping("/viewByJobType")
-    public ResponseEntity<List<Employee>> viewStaffMembersByJobType(@RequestParam("empType") String empType) {
-        List<Employee> staffMembers = medicalStaffManagementService.viewStaffMembersByJobType(empType);
+    public ResponseEntity<List<Object[]>> viewStaffMembersByJobType(@RequestParam("empType") String empType) {
+        List<Object[]> staffMembers = medicalStaffManagementService.viewStaffMembersByJobType(empType);
         return new ResponseEntity<>(staffMembers, HttpStatus.OK);
     }
 
