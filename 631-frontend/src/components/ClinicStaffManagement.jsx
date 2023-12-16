@@ -136,7 +136,7 @@ const ClinicStaffManagement = () => {
                 <form>
                     <input type="number" placeholder="Employee Number" name="empId" onChange={handleInputChange}/>
                     <input type="date" name="date" onChange={handleInputChange}/>
-                    <input type="number" name="shift" onChange={handleInputChange}/>
+                    <input type="number" name="shift" placeholder="shift" onChange={handleInputChange}/>
                     <button type="button" onClick={scheduleShiftFetch}>Submit</button>
                 </form> 
             : null}
